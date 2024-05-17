@@ -9,7 +9,7 @@ import NavbarLinkItem from "./NavbarLinkItem";
 export default function MobileMenu() {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button variant="outline" size="icon">
           <Menu size={16} />
         </Button>
