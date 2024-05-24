@@ -15,7 +15,7 @@ export default async function NavBar() {
   const user = await getUser();
 
   return (
-    <nav className="relative flex items-center w-full px-4 mx-auto max-w-7xl md:grid md:grid-cols-12 md:px-8 py-7">
+    <nav className="relative flex items-center w-full px-4 mx-auto max-w-7xl md:grid md:grid-cols-12 md:px-8 py-7 justify-between">
       <div className="md:col-span-3">
         <Link href="/">
           <h1 className="text-2xl font-semibold">
