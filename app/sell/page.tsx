@@ -2,15 +2,17 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import SelectCategory from "../components/SelectCategory";
 import FieldSet from "../components/FieldSet";
 import { Textarea } from "@/components/ui/textarea";
 import { TitapEditor } from "../components/TiptapEditor";
+import { UploadDropzone } from "../lib/uploadThing";
+import { Button } from "@/components/ui/button";
 
 export default function SellPage() {
   return (
@@ -37,7 +39,16 @@ export default function SellPage() {
             <FieldSet label="Description">
               <TitapEditor />
             </FieldSet>
+            <FieldSet label="Product Images">
+              <UploadDropzone endpoint="imageUploader" />
+            </FieldSet>
+            <FieldSet label="Product File">
+              <UploadDropzone endpoint="productFileUpload" />
+            </FieldSet>
           </CardContent>
+          <CardFooter className="mt-5">
+            <Button type="submit">Submit Form</Button>
+          </CardFooter>
         </form>
       </Card>
     </section>
