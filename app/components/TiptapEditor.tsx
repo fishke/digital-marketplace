@@ -91,7 +91,7 @@ export function MenuBar({ editor }: { editor: Editor | null }) {
   );
 }
 
-export function TitapEditor({
+export default function TitapEditor({
   json,
   setJson,
 }: {

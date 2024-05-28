@@ -8,19 +8,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import SelectCategory from "../components/SelectCategory";
-import FieldSet from "../components/FieldSet";
 import { Textarea } from "@/components/ui/textarea";
-import { TitapEditor } from "../components/TiptapEditor";
 import { UploadDropzone } from "../lib/uploadThing";
 import { useEffect, useState } from "react";
 import { JSONContent } from "@tiptap/react";
 import { useFormState } from "react-dom";
 import { State, sellProduct } from "../actions";
-import ErrorMessage from "../components/ErrorMessage";
+
 import { toast } from "sonner";
-import SubmitButton from "../components/SubmitButton";
+
 import { redirect } from "next/navigation";
+
+import FieldSet from "../components/FieldSet";
+import Page from "../components/Page";
+import ErrorMessage from "../components/ErrorMessage";
+import TitapEditor from "../components/TiptapEditor";
+import SubmitButton from "../components/SubmitButton";
+import SelectCategory from "../components/SelectCategory";
 
 export default function SellPage() {
   const initialState: State = {
@@ -41,7 +45,7 @@ export default function SellPage() {
     }
   }, [state]);
   return (
-    <section className="px-4 mx-auto max-w-7xl md:px-8">
+    <Page>
       <Card>
         <form action={formAction}>
           <CardHeader>
@@ -125,6 +129,6 @@ export default function SellPage() {
           </CardFooter>
         </form>
       </Card>
-    </section>
+    </Page>
   );
 }
