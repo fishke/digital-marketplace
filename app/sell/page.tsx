@@ -20,6 +20,7 @@ import { State, sellProduct } from "../actions";
 import ErrorMessage from "../components/ErrorMessage";
 import { toast } from "sonner";
 import SubmitButton from "../components/SubmitButton";
+import { redirect } from "next/navigation";
 
 export default function SellPage() {
   const initialState: State = {
@@ -34,6 +35,7 @@ export default function SellPage() {
   useEffect(() => {
     if (state.status === "success") {
       toast.success(state.message ?? "Product has been successfully added");
+      redirect("/");
     } else if (state.status === "error") {
       toast.error(state.message ?? "Something went wrong");
     }
