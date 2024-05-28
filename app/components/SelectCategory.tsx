@@ -12,6 +12,7 @@ export default function SelectCategory({}: Props) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <input type="hidden" name="category" value={selectedCategory || ""} />
       {categoryItems.map((category) => (
         <div key={category.id} className="cursor-pointer">
           <Card

@@ -5,6 +5,7 @@ import {
   ChainedCommands,
   Editor,
   EditorContent,
+  JSONContent,
   useEditor,
 } from "@tiptap/react";
 import { type Level } from "@tiptap/extension-heading";
@@ -90,18 +91,24 @@ export function MenuBar({ editor }: { editor: Editor | null }) {
   );
 }
 
-export function TitapEditor() {
+export function TitapEditor({
+  json,
+  setJson,
+}: {
+  json: JSONContent | null;
+  setJson: any;
+}) {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: `
-      <h1>Welcome to Tiptap!</h1>
-      <p>This is a WYSIWYG editor.</p>
-    `,
+    content: json,
     editorProps: {
       attributes: {
         class:
           "focus:outline-none focus:ring-0 min-h-[150px] prose prose-sm sm:prose-base",
       },
+    },
+    onUpdate: ({ editor }) => {
+      setJson(editor.getJSON());
     },
   });
 

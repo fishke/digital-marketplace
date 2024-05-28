@@ -5,6 +5,7 @@ import "./globals.css";
 import NavBar from "./components/NavBar";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <NavBar />
         {children}
+        <Toaster richColors theme="light" closeButton />
       </body>
     </html>
   );
