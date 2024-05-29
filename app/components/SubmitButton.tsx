@@ -13,7 +13,7 @@ export default function SubmitButton({ children }: SubmitButtonProps) {
     <>
       {pending ? (
         <Button disabled className="flex items-center gap-2">
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className="w-4 h-4 animate-spin" />
           Please Wait...
         </Button>
       ) : (

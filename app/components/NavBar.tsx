@@ -15,7 +15,7 @@ export default async function NavBar() {
   const user = await getUser();
 
   return (
-    <nav className="relative flex items-center w-full px-4 mx-auto max-w-7xl md:grid md:grid-cols-12 md:px-8 py-7 justify-between">
+    <nav className="relative flex items-center justify-between w-full px-4 mx-auto max-w-7xl md:grid md:grid-cols-12 md:px-8 py-7">
       <div className="md:col-span-3">
         <Link href="/">
           <h1 className="text-2xl font-semibold">
@@ -24,7 +24,7 @@ export default async function NavBar() {
         </Link>
       </div>
       <NavbarLinks />
-      <div className="flex items-center gap-2 ml-auto ms-2">
+      <div className="flex items-center ml-auto gap-2 ms-2">
         {user ? (
           <UserNav
             email={user.email!}
