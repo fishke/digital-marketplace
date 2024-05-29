@@ -30,7 +30,11 @@ export default async function SettingsPage() {
   return (
     <Page>
       <Card>
-        <SettingsForm />
+        <SettingsForm
+          firstName={data?.firstName ?? ""}
+          lastName={data?.lastName ?? ""}
+          email={data?.email ?? ""}
+        />
       </Card>
     </Page>
   );

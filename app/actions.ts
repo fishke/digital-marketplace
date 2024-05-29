@@ -30,12 +30,41 @@ const productSchema = z.object({
     .min(1, { message: "Please upload a zip of your product" }),
 });
 
-export async function sellProduct(prevState: any, formData: FormData) {
+const userSettingsSchema = z.object({
+  firstName: z
+    .string()
+    .min(3, { message: "Minimum of 3 chars are required" })
+    .or(z.literal(""))
+    .optional(),
+  lastName: z
+    .string()
+    .min(3, { message: "Minimum of 3 chars are required" })
+    .or(z.literal(""))
+    .optional(),
+});
+
+async function checkUserExists() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
   if (!user) {
     throw new Error("You must be logged in to sell a product");
   }
+
+  return user;
+}
+
+function handleError(validateFields: any) {
+  const state: State = {
+    status: "error",
+    errors: validateFields.error.flatten().fieldErrors,
+    message: "Something went wrong",
+  };
+
+  return state;
+}
+
+export async function sellProduct(prevState: any, formData: FormData) {
+  const user = await checkUserExists();
 
   const validateFields = productSchema.safeParse({
     name: formData.get("name"),
@@ -49,13 +78,7 @@ export async function sellProduct(prevState: any, formData: FormData) {
 
   // validate that values are correct
   if (!validateFields.success) {
-    const state: State = {
-      status: "error",
-      errors: validateFields.error.flatten().fieldErrors,
-      message: "Something went wrong",
-    };
-
-    return state;
+    return handleError(validateFields);
   }
 
   const {
@@ -82,6 +105,36 @@ export async function sellProduct(prevState: any, formData: FormData) {
   const state: State = {
     status: "success",
     message: "Product has been successfully created",
+  };
+
+  return state;
+}
+
+export async function updateSettings(prevState: any, formData: FormData) {
+  const user = await checkUserExists();
+
+  const validateFields = userSettingsSchema.safeParse({
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+  });
+
+  if (!validateFields.success) {
+    return handleError(validateFields);
+  }
+
+  const data = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      firstName: validateFields.data.firstName,
+      lastName: validateFields.data.lastName,
+    },
+  });
+
+  const state: State = {
+    status: "success",
+    message: "Settings have been successfully updated",
   };
 
   return state;
