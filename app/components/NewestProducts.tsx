@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { prisma } from "../lib/db";
-import Image from "next/image";
 import ProductCard from "./ProductCard";
 
 type Props = {};
@@ -34,7 +33,7 @@ export async function NewestProducts({}: Props) {
           Newest Products
         </h2>
         <Link
-          href="#"
+          href="/products/categories/all"
           className="hidden text-sm font-medium text-primary hover:text-primary/90 md:block"
         >
           All Products <span>&rarr;</span>
