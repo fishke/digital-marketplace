@@ -1,4 +1,4 @@
-import { NewestProducts } from "./components/NewestProducts";
+import { ProductsRow } from "./components/ProductsRow";
 import Page from "./components/Page";
 
 export default function Home() {
@@ -13,7 +13,10 @@ export default function Home() {
           resources to help you build your next project.
         </p>
       </div>
-      <NewestProducts />
+      <ProductsRow title="Newest Products" category="all" />
+      <ProductsRow title="Templates" category="template" />
+      <ProductsRow title="UI Kits" category="uikit" />
+      <ProductsRow title="Icons" category="icon" />
     </Page>
   );
 }
