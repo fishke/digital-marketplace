@@ -36,7 +36,7 @@ async function getData(category?: CategoryType | "all") {
 
 export function ProductsRow({ title, category }: Props) {
   return (
-    <Suspense fallback={<LoadingState />}>
+    <Suspense fallback={<ProductLoadingState />}>
       <ProductContent title={title} category={category} />
     </Suspense>
   );
@@ -64,7 +64,7 @@ async function ProductContent({ title, category }: Props) {
   );
 }
 
-function LoadingState() {
+export function ProductLoadingState() {
   return (
     <div className="mt-8">
       <Skeleton className="w-56 h-8" />

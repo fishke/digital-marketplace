@@ -18,6 +18,7 @@ async function getData(userId: string) {
 
   return data;
 }
+
 export default async function SettingsPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -27,6 +28,7 @@ export default async function SettingsPage() {
   }
 
   const data = await getData(user.id);
+
   return (
     <Page>
       <Card>
