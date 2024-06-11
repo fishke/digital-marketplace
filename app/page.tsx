@@ -13,7 +13,6 @@ export default function Home() {
           resources to help you build your next project.
         </p>
       </div>
-      <ProductsRow title="Newest Products" category="all" />
       <ProductsRow title="Templates" category="template" />
       <ProductsRow title="UI Kits" category="uikit" />
       <ProductsRow title="Icons" category="icon" />

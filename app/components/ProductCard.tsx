@@ -27,7 +27,7 @@ export default function ProductCard({
   shortDescription,
 }: ProductCardProps) {
   return (
-    <div className="flex flex-col rounded-lg">
+    <div className="flex flex-col rounded-lg shadow-sm ">
       <Carousel>
         <CarouselContent>
           {images.map((image, index) => (
