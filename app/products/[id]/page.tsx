@@ -17,6 +17,7 @@ import ProductDescription from "@/app/components/ProductDescription";
 import { JSONContent } from "@tiptap/react";
 import { buyProduct } from "@/app/actions";
 import SubmitButton from "@/app/components/SubmitButton";
+import { unstable_noStore } from "next/cache";
 
 type Props = {};
 
@@ -51,6 +52,7 @@ export default async function ProductPage({
 }: {
   params: { id: string };
 }) {
+  unstable_noStore();
   const data = await getData(params.id);
 
   // use Intl to format date to locale

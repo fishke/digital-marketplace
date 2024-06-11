@@ -2,8 +2,9 @@ import Page from "@/app/components/Page";
 import ProductCard from "@/app/components/ProductCard";
 import { prisma } from "@/app/lib/db";
 import { CategoryType } from "@prisma/client";
+import { unstable_noStore } from "next/cache";
 
-type Props = {
+type CategoryPageProps = {
   params: {
     category: string;
   };
@@ -26,7 +27,10 @@ async function getData(category: string | undefined) {
   });
   return products;
 }
-export default async function CategoryPage({ params: { category } }: Props) {
+export default async function CategoryPage({
+  params: { category },
+}: CategoryPageProps) {
+  unstable_noStore();
   const products = await getData(category);
   return (
     <Page>

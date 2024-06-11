@@ -11,6 +11,7 @@ import { prisma } from "../lib/db";
 import { Button } from "@/components/ui/button";
 import { goToStripeDashboard, linkStripeAccount } from "../actions";
 import SubmitButton from "../components/SubmitButton";
+import { unstable_noStore } from "next/cache";
 
 async function getData(userId: string) {
   // get user from prisma
@@ -27,6 +28,7 @@ async function getData(userId: string) {
 }
 
 export default async function BillingPage() {
+  unstable_noStore();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

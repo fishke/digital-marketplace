@@ -5,6 +5,7 @@ import { SellForm } from "./_components/SellForm";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { prisma } from "../lib/db";
 import { redirect } from "next/navigation";
+import { unstable_noStore } from "next/cache";
 
 /**
  * Check if the user is connected to stripe and redirect to the billing page if not
@@ -26,6 +27,7 @@ async function checkIsConnectedToStripe(userId: string) {
   }
 }
 export default async function SellPage() {
+  unstable_noStore();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

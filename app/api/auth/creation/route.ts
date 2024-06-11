@@ -1,9 +1,12 @@
 import { prisma } from "@/app/lib/db";
 import { stripe } from "@/lib/stripe";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { unstable_noStore } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  // this tells vercel to not pre-render this route
+  unstable_noStore();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
