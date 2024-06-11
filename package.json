@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "concurrently \"npm run dev\" \"npm run stripe:webhook\"",
     "dev": "next dev",
+    "stripe:webhook": "stripe listen --forward-to localhost:3000/api/stripe/connect --forward-connect-to localhost:3000/api/stripe/connect",
     "build": "next build",
-    "start": "next start",
+    "next:start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -43,6 +45,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "concurrently": "^8.2.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
