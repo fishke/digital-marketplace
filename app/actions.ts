@@ -178,3 +178,31 @@ export async function buyProduct(formData: FormData) {
 
   return redirect(session.url as string);
 }
+
+export async function linkStripeAccount() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    throw new Error("You must be logged in to link your account");
+  }
+
+  // get user from prisma
+  const userData = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    select: {
+      connectedAccountId: true,
+    },
+  });
+
+  const accountLink = await stripe.accountLinks.create({
+    account: userData?.connectedAccountId as string,
+    refresh_url: "http://localhost:3000/billing",
+    return_url: `http://localhost:3000/return/${userData?.connectedAccountId}`,
+    type: "account_onboarding",
+  });
+
+  return redirect(accountLink.url);
+}
