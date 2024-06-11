@@ -38,7 +38,6 @@ export function SellForm({}: Props) {
   useEffect(() => {
     if (state.status === "success") {
       toast.success(state.message ?? "Product has been successfully added");
-      redirect("/");
     } else if (state.status === "error") {
       toast.error(state.message ?? "Something went wrong");
     }

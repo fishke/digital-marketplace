@@ -92,7 +92,7 @@ export async function sellProduct(prevState: any, formData: FormData) {
     images,
     productFile,
   } = validateFields.data;
-  await prisma.product.create({
+  const data = await prisma.product.create({
     data: {
       name,
       price,
@@ -109,7 +109,7 @@ export async function sellProduct(prevState: any, formData: FormData) {
     message: "Product has been successfully created",
   };
 
-  return state;
+  return redirect(`/product/${data.id}`);
 }
 
 export async function updateSettings(prevState: any, formData: FormData) {
@@ -153,6 +153,11 @@ export async function buyProduct(formData: FormData) {
       shortDescription: true,
       name: true,
       images: true,
+      User: {
+        select: {
+          connectedAccountId: true,
+        },
+      },
     },
   });
 
@@ -172,6 +177,12 @@ export async function buyProduct(formData: FormData) {
         quantity: 1,
       },
     ],
+    payment_intent_data: {
+      application_fee_amount: Math.round((data?.price as number) * 100) * 0.1,
+      transfer_data: {
+        destination: data?.User?.connectedAccountId as string,
+      },
+    },
     success_url: "http://localhost:3000/payment/success",
     cancel_url: "http://localhost:3000/payment/cancel",
   });
@@ -180,12 +191,7 @@ export async function buyProduct(formData: FormData) {
 }
 
 export async function linkStripeAccount() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
-  if (!user) {
-    throw new Error("You must be logged in to link your account");
-  }
+  const user = await checkUserExists();
 
   // get user from prisma
   const userData = await prisma.user.findUnique({
@@ -205,4 +211,22 @@ export async function linkStripeAccount() {
   });
 
   return redirect(accountLink.url);
+}
+
+export async function goToStripeDashboard() {
+  const user = await checkUserExists();
+
+  const userData = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    select: {
+      connectedAccountId: true,
+    },
+  });
+
+  const loginLink = await stripe.accounts.createLoginLink(
+    userData?.connectedAccountId as string
+  );
+  redirect(loginLink.url);
 }
