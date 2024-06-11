@@ -15,6 +15,8 @@ import ProductValue from "./_components/ProductValue";
 import { Separator } from "@/components/ui/separator";
 import ProductDescription from "@/app/components/ProductDescription";
 import { JSONContent } from "@tiptap/react";
+import { buyProduct } from "@/app/actions";
+import SubmitButton from "@/app/components/SubmitButton";
 
 type Props = {};
 
@@ -24,6 +26,7 @@ async function getData(id: string) {
       id,
     },
     select: {
+      id: true,
       category: true,
       description: true,
       shortDescription: true,
@@ -81,9 +84,12 @@ export default async function ProductPage({
           {data?.name}
         </h1>
         <p className="mt-2 text-muted-foreground">{data?.shortDescription}</p>
-        <Button className="w-full mt-10" size="lg">
-          Buy for ${data?.price}
-        </Button>
+        <form action={buyProduct}>
+          <input type="hidden" name="id" value={data?.id} />
+          <SubmitButton className="w-full mt-10">
+            Buy for ${data?.price}
+          </SubmitButton>
+        </form>
         <Separator className="my-10" />
 
         <div className="grid grid-cols-2 w-full gap-y-3">
