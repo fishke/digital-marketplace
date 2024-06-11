@@ -183,8 +183,14 @@ export async function buyProduct(formData: FormData) {
         destination: data?.User?.connectedAccountId as string,
       },
     },
-    success_url: "http://localhost:3000/payment/success",
-    cancel_url: "http://localhost:3000/payment/cancel",
+    success_url:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/payment/success"
+        : "https://digital-marketplace-nine-blond.vercel.app/payment/success",
+    cancel_url:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/payment/cancel"
+        : "https://digital-marketplace-nine-blond.vercel.app/payment/cancel",
   });
 
   return redirect(session.url as string);
@@ -205,8 +211,15 @@ export async function linkStripeAccount() {
 
   const accountLink = await stripe.accountLinks.create({
     account: userData?.connectedAccountId as string,
-    refresh_url: "http://localhost:3000/billing",
-    return_url: `http://localhost:3000/return/${userData?.connectedAccountId}`,
+    refresh_url:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/billing"
+        : "https://digital-marketplace-nine-blond.vercel.app/billing",
+    return_url:
+      process.env.NODE_ENV === "development"
+        ? `http://localhost:3000/return/${userData?.connectedAccountId}`
+        : `https://digital-marketplace-nine-blond.vercel.app/return/${userData?.connectedAccountId}`,
+
     type: "account_onboarding",
   });
 
